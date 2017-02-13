@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function (props) {
 
-  const text = props.lyrics.text;
-  const artistQuery = props.artistQuery;
-  const songQuery = props.songQuery;
+  const text = props.lyrics;
+  const artistQuery = props.artistQuery;//local state
+  const songQuery = props.songQuery;//local state
   const handleSubmit = props.handleSubmit;
 
   const artistChange = e => props.setArtist(e.target.value);

@@ -1,30 +1,23 @@
 import React, {Component} from 'react';
-import store from '../store';
 import Lyrics from '../components/Lyrics';
-
+import {connect} from 'react-redux';
 import {searchLyrics} from '../action-creators/lyrics';
 
-export default class extends Component {
+class LyricsContainer extends Component {
 
-  constructor() {
+  constructor(props) {
 
-    super();
+    super(props);
 
     this.state = Object.assign({
       artistQuery: '',
       songQuery: ''
-    }, store.getState());
+    });
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.props.handleSubmit.bind(this);
     this.handleArtistInput = this.handleArtistInput.bind(this);
     this.handleSongInput = this.handleSongInput.bind(this);
 
-  }
-
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
-    });
   }
 
   handleArtistInput(artist) {
@@ -34,23 +27,11 @@ export default class extends Component {
   handleSongInput(song) {
     this.setState({ songQuery: song });
   }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    if (this.state.artistQuery && this.state.songQuery) {
-      store.dispatch(searchLyrics(this.state.artistQuery, this.state.songQuery));
-    }
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
   render() {
     return (
       <Lyrics
         {...this.state}
-        handleChange={this.handleChange}
+        lyrics= {this.props.lyrics}
         setArtist={this.handleArtistInput}
         setSong={this.handleSongInput}
         handleSubmit={this.handleSubmit} />
@@ -58,3 +39,20 @@ export default class extends Component {
   }
 
 }
+
+const mapStateToProps = (state) =>{
+  return{
+    lyrics: state.lyrics.text
+  }
+}
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    handleSubmit: function(e){
+      e.preventDefault();
+      if (this.state.artistQuery && this.state.songQuery) {
+        dispatch(searchLyrics(this.state.artistQuery, this.state.songQuery));
+      }
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(LyricsContainer)

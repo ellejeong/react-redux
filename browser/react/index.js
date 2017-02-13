@@ -1,10 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
-import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory, IndexRedirect} from 'react-router';
 
-import AlbumsContainer from './containers/AlbumsContainer';
-=======
 import {Provider} from 'react-redux';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory, IndexRedirect, IndexRoute} from 'react-router';
@@ -12,7 +7,7 @@ import {Router, Route, hashHistory, IndexRedirect, IndexRoute} from 'react-route
 import AlbumsContainer from './containers/AlbumsContainer';
 import StationsContainer from './containers/StationsContainer';
 import StationContainer from './containers/StationContainer';
->>>>>>> 4aed3487e168716ca8abd8cd458114c51e76d466
+
 import AlbumContainer from './containers/AlbumContainer';
 import ArtistContainer from './containers/ArtistContainer';
 import FilterableArtistsContainer from './containers/FilterableArtistsContainer';
@@ -60,11 +55,14 @@ const onArtistEnter = function (nextRouterState) {
 const onPlaylistEnter = function (nextRouterState) {
   const playlistId = nextRouterState.params.playlistId;
   store.dispatch(getPlaylistById(playlistId));
+  store.dispatch(loadAllSongs());
+  console.log('In OnPlaylistEnter, after dispatchingSongs')
 };
 
 const onStationsEnter = (nextRouterState) => {
   store.dispatch(loadAllSongs());
 };
+
 
 ReactDOM.render(
   <Provider store={store}>

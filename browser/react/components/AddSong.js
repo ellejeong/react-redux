@@ -6,8 +6,7 @@ export default function (props) {
   const songs = props.songs;
   const error = props.error;
   const handleChange = props.handleChange;
-  const handleSubmit = props.handleSubmit;
-
+  const handleSubmit = props.handleSubmit
   return (
     <div className="well">
       <form className="form-horizontal" noValidate name="songSelect" onSubmit={handleSubmit}>
