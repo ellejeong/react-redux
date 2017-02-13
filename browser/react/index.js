@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {Provider} from 'react-redux';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory, IndexRedirect, IndexRoute} from 'react-router';
@@ -7,7 +6,6 @@ import {Router, Route, hashHistory, IndexRedirect, IndexRoute} from 'react-route
 import AlbumsContainer from './containers/AlbumsContainer';
 import StationsContainer from './containers/StationsContainer';
 import StationContainer from './containers/StationContainer';
-
 import AlbumContainer from './containers/AlbumContainer';
 import ArtistContainer from './containers/ArtistContainer';
 import FilterableArtistsContainer from './containers/FilterableArtistsContainer';
@@ -26,7 +24,6 @@ import store from './store';
 import {receiveAlbums, getAlbumById} from './action-creators/albums';
 import {receiveArtists, getArtistById} from './action-creators/artists';
 import {receivePlaylists, getPlaylistById, loadAllSongs} from './action-creators/playlists';
-
 
 const onAppEnter = function () {
 
@@ -56,12 +53,12 @@ const onPlaylistEnter = function (nextRouterState) {
   const playlistId = nextRouterState.params.playlistId;
   store.dispatch(getPlaylistById(playlistId));
   store.dispatch(loadAllSongs());
-  console.log('In OnPlaylistEnter, after dispatchingSongs')
 };
 
 const onStationsEnter = (nextRouterState) => {
   store.dispatch(loadAllSongs());
 };
+
 
 
 ReactDOM.render(

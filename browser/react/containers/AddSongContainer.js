@@ -1,12 +1,11 @@
 import React from 'react';
 import AddSong from '../components/AddSong';
-//import store from '../store';
-import {loadAllSongs, addSongToPlaylist} from '../action-creators/playlists';
+import store from '../store';
 import {connect} from 'react-redux'
+import {loadAllSongs, addSongToPlaylist} from '../action-creators/playlists';
 
 //COMPONENT DEFINITION
 class AddSongContainer extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = Object.assign({
@@ -15,19 +14,15 @@ class AddSongContainer extends React.Component {
     });
     this.handleChange = this.handleChange.bind(this);
   }
-
   handleChange(evt) {
     this.setState({
       songId: evt.target.value,
       error: false
     });
   }
-
   render() {
-
     const songs = this.props.songs;
     const error = this.state.error;
-
     return (
       <AddSong
         {...this.props}
@@ -38,28 +33,22 @@ class AddSongContainer extends React.Component {
     );
   }
 }
-
 //CONNECT FUNCS
 const mapStateToProps = (state) => {
-  console.log('STATE',state)
   return {
     playlistId: state.playlists.selected.id,
     songs: state.songs
   }
 }
-
 const mapDispatchToProps = function (dispatch) {
   return {
     handleSubmit: function(evt){
+      console.log('THIS',this, 'PLAYLISTID: ', this.props.playlistId,'PLAYLIST SONG ID : ', this.state.songId)
       evt.preventDefault();
-      console.log("THIS IS", this)
       dispatch(addSongToPlaylist(this.props.playlistId, this.state.songId))
       .catch(() => this.setState({ error: true }));
-
     }
   }
 }
 //ACTUAL CONNECT LOL
 export default connect(mapStateToProps, mapDispatchToProps)(AddSongContainer)
-
-

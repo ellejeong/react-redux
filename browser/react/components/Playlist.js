@@ -5,6 +5,7 @@ import AddSongContainer from '../containers/AddSongContainer';
 export default function (props) {
 
   const playlist = props.selectedPlaylist;
+  console.log(playlist)
 
   return (
     <div>

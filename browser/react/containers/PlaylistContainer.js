@@ -1,37 +1,29 @@
 import React, {Component} from 'react';
 import store from '../store';
+import {connect} from 'react-redux'
 import Playlist from '../components/Playlist';
 import {toggleSong} from '../action-creators/player';
 
-export default class extends Component {
 
-  constructor() {
-    super();
-    this.state = store.getState();
+// WE CAN ALSO USE:
+//Object.assign({selectedPlaylist: state.playlists.selected}, state.player)
+const mapStateToProps = (state, ownProps) => {
+  return {
+    selectedPlaylist: state.playlists.selected,
+    currentSong: state.player.currentSong,
+    isPlaying: state.player.isPlaying,
+    currentSongList: state.player.currentSongList,
+    progress: state.player.progress
   }
-
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  toggle(song, list) {
-    store.dispatch(toggleSong(song, list));
-  }
-
-  render() {
-    return (
-      <Playlist
-        {...this.state.player}
-        selectedPlaylist={this.state.playlists.selected}
-        toggleOne={this.toggle}
-      />
-    );
-  }
-
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    toggleOne: (song, list) => {
+      dispatch(toggleSong(song, list));
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlist)
